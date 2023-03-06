@@ -46,8 +46,8 @@ echo "Compilación y pruebas"
 echo "====================="
 echo ""
 
-make -f makefile-chanutron clean    2>&1
-sudo timeout 30s make -f makefile-chanutron valgrind 2>&1
+make -f makefile clean    2>&1
+sudo timeout 30s make -f makefile valgrind-chanutron 2>&1
 
 RETVAL=$?
 #Ojo con esto. Pa2mmf devuelve 0 para éxito, 2 para error, Pa2mm devuelve 0 para éxito y >0 para error. Si fallan justo 124 pruebas, va a salir como timeout. Creo.
@@ -71,7 +71,7 @@ echo ""
 
 
 make -f makefile clean    2>&1
-sudo timeout 30s make -f makefile valgrind 2>&1
+sudo timeout 30s make -f makefile valgrind-alumno 2>&1
 
 RETVAL=$?
 #Ojo con esto. Pa2mmf devuelve 0 para éxito, 2 para error, Pa2mm devuelve 0 para éxito y >0 para error. Si fallan justo 124 pruebas, va a salir como timeout. Creo.
@@ -90,7 +90,11 @@ if [ $RETVAL -eq 124 ]; then
 fi
 
 echo ""
-echo "Parece que tu TP pasa tus pruebas."
+echo "Parece que tu TP pasa tus pruebas también."
+echo ""
+echo ""
+echo "TODAS LAS PRUEBAS SE EJECUTARON CON ÉXITO, ¡FELICITACIONES!"
+echo ""
 echo ""
 
 cat success.txt
