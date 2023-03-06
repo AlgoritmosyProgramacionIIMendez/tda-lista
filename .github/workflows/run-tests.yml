@@ -1,0 +1,27 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Pruebas de la cátedra
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Download dependencies
+        run: |
+          sudo apt update
+          sudo apt -y install clang-14 build-essential valgrind
+
+      - name: Executing tests
+        run: bash test.sh
