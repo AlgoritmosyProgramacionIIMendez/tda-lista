@@ -6,9 +6,13 @@ all: clean valgrind
 
 ejemplo: ejemplo.c src/*
 	$(CC) $(CFLAGS) src/*.c ejemplo.c -o ejemplo 2>&1
+	
+pruebas_alumno: src/*.c pruebas_alumno.c
+	$(CC) $(CFLAGS) src/*.c pruebas_alumno.c -o pruebas_alumno
 
-valgrind: ejemplo
-	valgrind $(VALGRIND_FLAGS) ./ejemplo 2>&1
+valgrind: pruebas_alumno
+	valgrind $(VALGRIND_FLAGS) ./pruebas_alumno 2>&1
 
 clean:
 	rm -f ejemplo 2>&1
+	
