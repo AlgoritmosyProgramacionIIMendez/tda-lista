@@ -53,21 +53,46 @@ RETVAL=$?
 #Ojo con esto. Pa2mmf devuelve 0 para éxito, 2 para error, Pa2mm devuelve 0 para éxito y >0 para error. Si fallan justo 124 pruebas, va a salir como timeout. Creo.
 if [ $RETVAL -eq 2 ]; then
     echo ""
-    echo -e "\033[1;31m¡ERROR CORRIENDO VALGRIND! Revisa tu entrega\033[0m"
+    echo -e "\033[1;31m¡ERROR CORRIENDO VALGRIND! Revisa tu entrega, las pruebas de la CÁTEDRA no pasan.\033[0m"
     echo ""
     exit 1
 fi
 
 if [ $RETVAL -eq 124 ]; then
     echo ""
-    echo -e "\033[1;31m¡TIMEOUT! Revisa tu entrega\033[0m"
+    echo -e "\033[1;31m¡TIMEOUT! Revisa tu entrega, las pruebas de la CÁTEDRA no pasan.\033[0m"
     echo ""
     exit 2;
 fi
 
 echo ""
-echo "Parece que tu TP pasa todas las pruebas."
+echo "Parece que tu TP pasa todas las pruebas de la cátedra... Pasemos ahora a las tuyas."
 echo ""
+
+
+make -f makefile clean    2>&1
+sudo timeout 30s make -f makefile valgrind 2>&1
+
+RETVAL=$?
+#Ojo con esto. Pa2mmf devuelve 0 para éxito, 2 para error, Pa2mm devuelve 0 para éxito y >0 para error. Si fallan justo 124 pruebas, va a salir como timeout. Creo.
+if [ $RETVAL -eq 2 ]; then
+    echo ""
+    echo -e "\033[1;31m¡ERROR CORRIENDO VALGRIND! Revisa tu entrega, tus pruebas no pasan.\033[0m"
+    echo ""
+    exit 1
+fi
+
+if [ $RETVAL -eq 124 ]; then
+    echo ""
+    echo -e "\033[1;31m¡TIMEOUT! Revisa tu entrega, tus pruebas no pasan.\033[0m"
+    echo ""
+    exit 2;
+fi
+
+echo ""
+echo "Parece que tu TP pasa tus pruebas."
+echo ""
+
 cat success.txt
 
 exit 0
